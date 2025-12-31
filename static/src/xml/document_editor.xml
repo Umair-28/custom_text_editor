@@ -8,34 +8,37 @@
                         <i class="fa fa-file-text-o"/>
                     </div>
                     <div class="o_title_text">
-                        <h4 t-esc="state.documentName || 'Untitled'"/>
+                        <h4 t-esc="state.documentName"/>
                         <span class="o_title_subtitle">Text Editor</span>
                     </div>
                 </div>
                 <div class="o_editor_actions">
-                    <button class="btn btn-primary o_save_btn" t-on-click="saveDocument" t-att-disabled="state.saving">
+                    <button class="btn btn-lg btn-light o_close_btn" t-on-click="closeEditor">
+                        <i class="fa fa-times"/>
+                    </button>
+                    <button class="btn btn-lg btn-primary o_save_btn" t-on-click="saveDocument" t-att-disabled="state.saving">
                         <i class="fa fa-save"/>
-                        <span class="ms-1">
+                        <span class="btn-text">
                             <t t-if="state.saving">Saving...</t>
                             <t t-else="">Save</t>
                         </span>
                     </button>
-                    <button class="btn btn-light o_close_btn" t-on-click="closeEditor">
-                        <i class="fa fa-times"/>
-                    </button>
+
                 </div>
             </div>
 
             <div class="o_editor_content">
                 <t t-if="state.loading">
                     <div class="o_loading_state">
-                        <i class="fa fa-circle-o-notch fa-spin fa-2x mb-2"/>
-                        <p>Loading...</p>
+                        <div class="o_spinner">
+                            <i class="fa fa-circle-o-notch fa-spin"/>
+                        </div>
+                        <p>Loading document...</p>
                     </div>
                 </t>
                 <t t-else="">
                     <div class="o_editor_wrapper">
-                        <textarea class="o_editor_textarea" t-model="state.content" t-on-input="onContentChange" placeholder="Start typing..."/>
+                        <textarea class="o_editor_textarea" t-model="state.content" t-on-input="onContentChange" placeholder="Start typing your content here..." spellcheck="true"/>
                     </div>
                 </t>
             </div>
@@ -60,43 +63,36 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 12px 18px;
+                padding: 12px 25px;
                 background: white;
                 border-bottom: 1px solid #dee2e6;
                 z-index: 10;
             }
             
             .o_editor_title {
-        display: flex;
-        align-items: center; 
-        gap: 12px;
-    }
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
             
             .o_title_icon {
-        width: 42px;
-        height: 42px;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #714B67;
-        color: white;
-        border-radius: 8px;
-        font-size: 18px;
-    }
-    .o_title_text {
-        display: flex;
-        flex-direction: column; /* Stacks name and subtitle vertically */
-        justify-content: center;
-    }
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #714B67; /* Odoo Purple */
+                border-radius: 8px;
+                color: white;
+                font-size: 18px;
+            }
             
             .o_title_text h4 {
-        margin: 0;
-        font-size: 15px;
-        font-weight: 700;
-        line-height: 1.2;
-        color: #111827;
-    }
+                margin: 0;
+                font-size: 16px;
+                font-weight: 600;
+                color: #212529;
+            }
             
             .o_title_subtitle {
                 font-size: 12px;
