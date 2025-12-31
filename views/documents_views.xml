@@ -7,32 +7,32 @@
         <field name="inherit_id" ref="documents.document_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button name="action_open_editor" 
-                        type="object" 
-                        string="Edit Document"
-                        class="btn-primary"
-                        invisible="not is_text_editable"
-                        icon="fa-edit"/>
+                <button name="action_open_editor" type="object" string="Edit Document" class="btn-primary" invisible="not is_text_editable" icon="fa-edit"/>
             </xpath>
         </field>
     </record>
 
-    <!-- Add "Edit" button to kanban view
+    <!-- Add "Edit" button to kanban view -->
     <record id="documents_document_kanban_inherit" model="ir.ui.view">
         <field name="name">documents.document.kanban.inherit</field>
         <field name="model">documents.document</field>
         <field name="inherit_id" ref="documents.documents_kanban_view"/>
         <field name="arch" type="xml">
+            <!-- Add field after alias_tag_ids -->
             <xpath expr="//field[@name='alias_tag_ids']" position="after">
                 <field name="is_text_editable"/>
             </xpath>
-            <xpath expr="//footer" position="after">
-                <div t-if="record.type.raw_value != 'folder' and record.is_text_editable.raw_value" class="px-2 pb-1">
-                    <button name="action_open_editor" type="object" string="Edit" class="btn btn-sm btn-secondary">
-                        <i class="fa fa-edit"/> Edit
+
+            <!-- Move the Edit button to header -->
+            <xpath expr="//div[@class='o_kanban_header']" position="inside">
+                <t t-if="record.type.raw_value != 'folder' and record.is_text_editable.raw_value">
+                    <button name="action_open_editor" type="object" string="Edit" class="btn btn-sm btn-secondary float-right">
+                        <i class="fa fa-edit"/>
+ Edit
                     </button>
-                </div>
+                </t>
             </xpath>
         </field>
-    </record> -->
+    </record>
+
 </odoo>
