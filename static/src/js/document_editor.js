@@ -7,6 +7,7 @@ class CustomDocumentEditor extends Component {
     setup() {
         this.orm = useService("orm");
         this.notification = useService("notification");
+        this.actionService = useService("action");
         
         this.state = useState({
             content: "",
@@ -91,7 +92,10 @@ class CustomDocumentEditor extends Component {
     }
 
     closeEditor() {
-        this.props.close();
+        // 2. Use the action service to close the current view/modal
+        this.actionService.doAction({ 
+            type: "ir.actions.act_window_close" 
+        });
     }
 }
 
