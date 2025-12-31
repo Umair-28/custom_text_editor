@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="odoo_text_editor.DocumentEditor">
+        <div class="o_document_editor">
+            <div class="o_editor_header">
+                <div class="o_editor_title">
+                    <i class="fa fa-file-text-o me-2"/>
+                    <span t-esc="state.documentName"/>
+                </div>
+                <div class="o_editor_actions">
+                    <button class="btn btn-primary me-2" 
+                            t-on-click="saveDocument"
+                            t-att-disabled="state.saving">
+                        <i class="fa fa-save me-1"/>
+                        <t t-if="state.saving">Saving...</t>
+                        <t t-else="">Save</t>
+                    </button>
+                    <button class="btn btn-secondary" t-on-click="closeEditor">
+                        <i class="fa fa-times me-1"/>
+                        Close
+                    </button>
+                </div>
+            </div>
+            
+            <div class="o_editor_content">
+                <t t-if="state.loading">
+                    <div class="text-center p-5">
+                        <i class="fa fa-spinner fa-spin fa-3x"/>
+                        <p class="mt-3">Loading document...</p>
+                    </div>
+                </t>
+                <t t-else="">
+                    <textarea 
+                        class="o_editor_textarea"
+                        t-model="state.content"
+                        t-on-input="onContentChange"
+                        placeholder="Start typing..."/>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="odoo_text_editor.DocumentEditorStyle">
+        <style>
+            .o_document_editor {
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                background: #f8f9fa;
+            }
+            
+            .o_editor_header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                background: white;
+                border-bottom: 1px solid #dee2e6;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            }
+            
+            .o_editor_title {
+                font-size: 18px;
+                font-weight: 600;
+                color: #212529;
+                display: flex;
+                align-items: center;
+            }
+            
+            .o_editor_actions {
+                display: flex;
+                gap: 10px;
+            }
+            
+            .o_editor_content {
+                flex: 1;
+                padding: 20px;
+                overflow: auto;
+            }
+            
+            .o_editor_textarea {
+                width: 100%;
+                height: 100%;
+                min-height: 500px;
+                padding: 20px;
+                border: 1px solid #dee2e6;
+                border-radius: 8px;
+                font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                font-size: 14px;
+                line-height: 1.6;
+                resize: vertical;
+                background: white;
+            }
+            
+            .o_editor_textarea:focus {
+                outline: none;
+                border-color: #0d6efd;
+                box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+            }
+        </style>
+    </t>
+</templates>

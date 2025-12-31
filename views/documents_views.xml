@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add "Edit" button to document form view -->
+    <record id="documents_document_form_inherit" model="ir.ui.view">
+        <field name="name">documents.document.form.inherit</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.document_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_editor" 
+                        type="object" 
+                        string="Edit Document"
+                        class="btn-primary"
+                        invisible="not is_text_editable"
+                        icon="fa-edit"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add "Edit" button to kanban view -->
+    <record id="documents_document_kanban_inherit" model="ir.ui.view">
+        <field name="name">documents.document.kanban.inherit</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.documents_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_kanban_record_bottom')]" position="inside">
+                <button name="action_open_editor" 
+                        type="object" 
+                        string="Edit"
+                        class="btn btn-sm btn-secondary"
+                        invisible="not is_text_editable"
+                        icon="fa-edit"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
