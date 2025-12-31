@@ -37,7 +37,7 @@
                 </t>
                 <t t-else="">
                     <div class="o_editor_wrapper">
-                        <textarea class="o_editor_textarea" t-model="state.content" t-on-input="onContentChange" placeholder="Start typing your content here..." spellcheck="true"/>
+                        <textarea class="o_editor_textarea" rows="15" cols="30" t-model="state.content" t-on-input="onContentChange" placeholder="Start typing your content here..." spellcheck="true"/>
                     </div>
                 </t>
             </div>
