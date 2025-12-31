@@ -21,7 +21,7 @@
     <record id="documents_document_kanban_inherit" model="ir.ui.view">
         <field name="name">documents.document.kanban.inherit</field>
         <field name="model">documents.document</field>
-        <field name="inherit_id" ref="documents.documents_kanban_view"/>
+        <field name="inherit_id" ref="documents.document_view_kanban"/>
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('o_kanban_record_bottom')]" position="inside">
                 <button name="action_open_editor" 
