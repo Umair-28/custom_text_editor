@@ -21,15 +21,37 @@
     <record id="documents_document_kanban_inherit" model="ir.ui.view">
         <field name="name">documents.document.kanban.inherit</field>
         <field name="model">documents.document</field>
-        <field name="inherit_id" ref="documents.document_view_kanban"/>
+        <field name="inherit_id" ref="documents.view_document_kanban"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('o_kanban_record_bottom')]" position="inside">
-                <button name="action_open_editor" 
-                        type="object" 
-                        string="Edit"
-                        class="btn btn-sm btn-secondary"
-                        invisible="not is_text_editable"
-                        icon="fa-edit"/>
+            <!-- First, ensure the field is available in the kanban view -->
+            <xpath expr="//field[@name='alias_tag_ids']" position="after">
+                <field name="is_text_editable"/>
+            </xpath>
+            
+            <!-- Add Edit button after the footer (for documents with tags) -->
+            <xpath expr="//footer[@t-if=&quot;record.type.raw_value != 'folder' and record.tag_ids.raw_value.length&quot;]" position="after">
+                <div t-if="record.type.raw_value != 'folder' and record.is_text_editable.raw_value" class="px-2 pb-1">
+                    <button name="action_open_editor" 
+                            type="object" 
+                            string="Edit"
+                            class="btn btn-sm btn-link text-primary p-0"
+                            icon="fa-edit">
+                        <i class="fa fa-edit me-1"/> Edit
+                    </button>
+                </div>
+            </xpath>
+            
+            <!-- Add Edit button for documents without tags (need separate xpath) -->
+            <xpath expr="//div[@class='flex-shrink-1 flex-auto']" position="after">
+                <div t-if="record.type.raw_value != 'folder' and !record.tag_ids.raw_value.length and record.is_text_editable.raw_value" class="px-2 pb-1">
+                    <button name="action_open_editor" 
+                            type="object" 
+                            string="Edit"
+                            class="btn btn-sm btn-link text-primary p-0"
+                            icon="fa-edit">
+                        <i class="fa fa-edit me-1"/> Edit
+                    </button>
+                </div>
             </xpath>
         </field>
     </record>
