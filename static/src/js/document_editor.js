@@ -92,10 +92,7 @@ class CustomDocumentEditor extends Component {
     }
 
     closeEditor() {
-        // 2. Use the action service to close the current view/modal
-        this.actionService.doAction({ 
-            type: "ir.actions.act_window_close" 
-        });
+        window.history.back();
     }
 }
 

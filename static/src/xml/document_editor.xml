@@ -11,19 +11,21 @@
                         <h4 t-esc="state.documentName"/>
                     </div>
                 </div>
-                <div class="o_editor_actions">
-                    <button class="btn btn-lg btn-light o_close_btn" t-on-click="closeEditor">
-                        <i class="fa fa-times"/>
-                    </button>
-                    <button class="btn btn-lg btn-primary o_save_btn" t-on-click="saveDocument" t-att-disabled="state.saving">
-                        <i class="fa fa-save"/>
-                        <span class="btn-text">
-                            <t t-if="state.saving">Saving...</t>
-                            <t t-else="">Save</t>
-                        </span>
-                    </button>
+                <div></div>
 
-                </div>
+            </div>
+            <div class="o_editor_actions">
+                <button class="btn btn-lg btn-light o_close_btn" t-on-click="closeEditor">
+                    <i class="fa fa-times"/>
+                </button>
+                <button class="btn btn-lg btn-primary o_save_btn" t-on-click="saveDocument" t-att-disabled="state.saving">
+                    <i class="fa fa-save"/>
+                    <span class="btn-text">
+                        <t t-if="state.saving">Saving...</t>
+                        <t t-else="">Save</t>
+                    </span>
+                </button>
+
             </div>
 
             <div class="o_editor_content">
