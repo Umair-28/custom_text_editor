@@ -20,7 +20,7 @@
         <field name="arch" type="xml">
             <!-- Insert the Edit button after the document name inside the card template -->
             <xpath expr="//t[@t-name='card']//div[contains(@class,'fw-bolder')]" position="inside">
-                    <button name="action_open_editor" type="object" class="btn btn-sm btn-secondary ms-2" title="Edit Document">
+                    <button name="action_open_editor" type="object" class="btn btn-sm btn-secondary ms-2" title="Edit Document....">
                         <i class="fa fa-edit"/>
                     </button>
             </xpath>

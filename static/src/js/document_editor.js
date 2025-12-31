@@ -1,12 +1,11 @@
 /** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { Component, useState, onWillStart } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 
 class CustomDocumentEditor extends Component {
     setup() {
-        this.rpc = useService("rpc");
+        this.orm = useService("orm");
         this.notification = useService("notification");
         
         this.state = useState({
@@ -22,48 +21,62 @@ class CustomDocumentEditor extends Component {
     }
 
     async loadDocument() {
-        const documentId = this.props.action.params.document_id;
+        const documentId = this.props.action.context.active_id;
         
         try {
-            const result = await this.rpc("/document/editor/get", {
-                document_id: documentId,
-            });
-
-            if (result.success) {
-                this.state.content = result.content;
-                this.state.documentName = result.name;
+            const doc = await this.orm.read(
+                "documents.document",
+                [documentId],
+                ["name", "attachment_id"]
+            );
+            
+            if (doc && doc[0]) {
+                this.state.documentName = doc[0].name;
+                
+                if (doc[0].attachment_id) {
+                    const attachment = await this.orm.read(
+                        "ir.attachment",
+                        [doc[0].attachment_id[0]],
+                        ["datas"]
+                    );
+                    
+                    if (attachment && attachment[0] && attachment[0].datas) {
+                        this.state.content = atob(attachment[0].datas);
+                    }
+                }
+                
                 this.state.loading = false;
-            } else {
-                this.notification.add(
-                    result.error || "Failed to load document",
-                    { type: "danger" }
-                );
             }
         } catch (error) {
             this.notification.add("Error loading document", { type: "danger" });
             console.error(error);
+            this.state.loading = false;
         }
     }
 
     async saveDocument() {
-        const documentId = this.props.action.params.document_id;
+        const documentId = this.props.action.context.active_id;
         this.state.saving = true;
 
         try {
-            const result = await this.rpc("/document/editor/save", {
-                document_id: documentId,
-                content: this.state.content,
-            });
+            const doc = await this.orm.read(
+                "documents.document",
+                [documentId],
+                ["attachment_id"]
+            );
 
-            if (result.success) {
+            if (doc && doc[0] && doc[0].attachment_id) {
+                const encodedContent = btoa(this.state.content);
+                
+                await this.orm.write(
+                    "ir.attachment",
+                    [doc[0].attachment_id[0]],
+                    { datas: encodedContent }
+                );
+
                 this.notification.add("Document saved successfully", {
                     type: "success",
                 });
-            } else {
-                this.notification.add(
-                    result.error || "Failed to save document",
-                    { type: "danger" }
-                );
             }
         } catch (error) {
             this.notification.add("Error saving document", { type: "danger" });
