@@ -9,7 +9,6 @@
                     </div>
                     <div class="o_title_text">
                         <h4 t-esc="state.documentName"/>
-                        <span class="o_title_subtitle">Text Editor</span>
                     </div>
                 </div>
                 <div class="o_editor_actions">
@@ -101,6 +100,7 @@
             
             .o_editor_actions {
                 display: flex;
+                 justify-content: flex-end; 
                 gap: 8px;
             }
             
