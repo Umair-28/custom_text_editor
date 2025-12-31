@@ -125,7 +125,7 @@ class DocumentsDocument(models.Model):
         return {
             "type": "ir.actions.client",
             "tag": "odoo_text_editor",
-            "target": "new",
+            "target": "current",
             "params": {
                 "document_id": self.id,
                 "document_name": self.name,

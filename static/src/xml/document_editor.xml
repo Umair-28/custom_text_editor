@@ -13,9 +13,7 @@
                     </div>
                 </div>
                 <div class="o_editor_actions">
-                    <button class="btn btn-lg btn-primary o_save_btn" 
-                            t-on-click="saveDocument"
-                            t-att-disabled="state.saving">
+                    <button class="btn btn-lg btn-primary o_save_btn" t-on-click="saveDocument" t-att-disabled="state.saving">
                         <i class="fa fa-save"/>
                         <span class="btn-text">
                             <t t-if="state.saving">Saving...</t>
@@ -27,7 +25,7 @@
                     </button>
                 </div>
             </div>
-            
+
             <div class="o_editor_content">
                 <t t-if="state.loading">
                     <div class="o_loading_state">
@@ -39,12 +37,7 @@
                 </t>
                 <t t-else="">
                     <div class="o_editor_wrapper">
-                        <textarea 
-                            class="o_editor_textarea"
-                            t-model="state.content"
-                            t-on-input="onContentChange"
-                            placeholder="Start typing your content here..."
-                            spellcheck="true"/>
+                        <textarea class="o_editor_textarea" t-model="state.content" t-on-input="onContentChange" placeholder="Start typing your content here..." spellcheck="true"/>
                     </div>
                 </t>
             </div>
@@ -56,70 +49,68 @@
             .o_document_editor {
                 display: flex;
                 flex-direction: column;
-                height: 100vh;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+                height: 75vh; /* Prevents overflow in browser */
+                min-height: 500px;
+                background: #f0f2f5; /* Light desk background */
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                margin: -16px; /* Negates Odoo's standard modal-body padding */
             }
             
+            /* Sticky Header */
             .o_editor_header {
+                flex: 0 0 auto;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 20px 30px;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(10px);
-                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+                padding: 12px 25px;
+                background: white;
+                border-bottom: 1px solid #dee2e6;
+                z-index: 10;
             }
             
             .o_editor_title {
                 display: flex;
                 align-items: center;
-                gap: 15px;
+                gap: 12px;
             }
             
             .o_title_icon {
-                width: 48px;
-                height: 48px;
+                width: 40px;
+                height: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 12px;
+                background: #714B67; /* Odoo Purple */
+                border-radius: 8px;
                 color: white;
-                font-size: 20px;
-                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+                font-size: 18px;
             }
             
             .o_title_text h4 {
                 margin: 0;
-                font-size: 18px;
+                font-size: 16px;
                 font-weight: 600;
-                color: #1a1a1a;
-                line-height: 1.3;
+                color: #212529;
             }
             
             .o_title_subtitle {
-                font-size: 13px;
-                color: #6b7280;
-                font-weight: 400;
+                font-size: 12px;
+                color: #6c757d;
             }
             
             .o_editor_actions {
                 display: flex;
-                gap: 12px;
+                gap: 8px;
             }
             
             .o_editor_actions .btn {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                padding: 12px 24px;
-                border-radius: 10px;
+                padding: 8px 16px;
+                border-radius: 6px;
                 font-weight: 500;
-                transition: all 0.2s ease;
-                border: none;
-                font-size: 15px;
+                font-size: 14px;
             }
             
             .o_save_btn {
@@ -152,9 +143,9 @@
             }
             
             .o_editor_content {
-                flex: 1;
+                flex: 1 1 auto;
                 padding: 30px;
-                overflow: auto;
+                overflow-y: auto;
                 display: flex;
                 justify-content: center;
             }
@@ -164,8 +155,8 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                height: 100%;
-                color: white;
+                width: 100%;
+                color: #714B67;
             }
             
             .o_spinner {
@@ -187,24 +178,23 @@
             
             .o_editor_wrapper {
                 width: 100%;
-                max-width: 900px;
-                height: 100%;
+                max-width: 850px;
+                min-height: 100%;
                 background: white;
-                border-radius: 16px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-                overflow: hidden;
+                border-radius: 2px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                display: flex;
             }
             
             .o_editor_textarea {
                 width: 100%;
                 height: 100%;
-                padding: 40px;
+                padding: 50px 60px;
                 border: none;
-                font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
-                font-size: 15px;
-                line-height: 1.8;
-                color: #1a1a1a;
-                background: white;
+                font-family: 'Inter', sans-serif;
+                font-size: 16px;
+                line-height: 1.6;
+                color: #333;
                 resize: none;
                 outline: none;
             }
