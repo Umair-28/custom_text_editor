@@ -4,37 +4,48 @@
         <div class="o_document_editor">
             <div class="o_editor_header">
                 <div class="o_editor_title">
-                    <i class="fa fa-file-text-o me-2"/>
-                    <span t-esc="state.documentName"/>
+                    <div class="o_title_icon">
+                        <i class="fa fa-file-text-o"/>
+                    </div>
+                    <div class="o_title_text">
+                        <h4 t-esc="state.documentName"/>
+                        <span class="o_title_subtitle">Text Editor</span>
+                    </div>
                 </div>
                 <div class="o_editor_actions">
-                    <button class="btn btn-primary me-2" 
+                    <button class="btn btn-lg btn-primary o_save_btn" 
                             t-on-click="saveDocument"
                             t-att-disabled="state.saving">
-                        <i class="fa fa-save me-1"/>
-                        <t t-if="state.saving">Saving...</t>
-                        <t t-else="">Save</t>
+                        <i class="fa fa-save"/>
+                        <span class="btn-text">
+                            <t t-if="state.saving">Saving...</t>
+                            <t t-else="">Save</t>
+                        </span>
                     </button>
-                    <button class="btn btn-secondary" t-on-click="closeEditor">
-                        <i class="fa fa-times me-1"/>
-                        Close
+                    <button class="btn btn-lg btn-light o_close_btn" t-on-click="closeEditor">
+                        <i class="fa fa-times"/>
                     </button>
                 </div>
             </div>
             
             <div class="o_editor_content">
                 <t t-if="state.loading">
-                    <div class="text-center p-5">
-                        <i class="fa fa-spinner fa-spin fa-3x"/>
-                        <p class="mt-3">Loading document...</p>
+                    <div class="o_loading_state">
+                        <div class="o_spinner">
+                            <i class="fa fa-circle-o-notch fa-spin"/>
+                        </div>
+                        <p>Loading document...</p>
                     </div>
                 </t>
                 <t t-else="">
-                    <textarea 
-                        class="o_editor_textarea"
-                        t-model="state.content"
-                        t-on-input="onContentChange"
-                        placeholder="Start typing..."/>
+                    <div class="o_editor_wrapper">
+                        <textarea 
+                            class="o_editor_textarea"
+                            t-model="state.content"
+                            t-on-input="onContentChange"
+                            placeholder="Start typing your content here..."
+                            spellcheck="true"/>
+                    </div>
                 </t>
             </div>
         </div>
@@ -46,56 +57,200 @@
                 display: flex;
                 flex-direction: column;
                 height: 100vh;
-                background: #f8f9fa;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             }
             
             .o_editor_header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 15px 20px;
-                background: white;
-                border-bottom: 1px solid #dee2e6;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                padding: 20px 30px;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
             }
             
             .o_editor_title {
-                font-size: 18px;
-                font-weight: 600;
-                color: #212529;
                 display: flex;
                 align-items: center;
+                gap: 15px;
+            }
+            
+            .o_title_icon {
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 12px;
+                color: white;
+                font-size: 20px;
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            }
+            
+            .o_title_text h4 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 600;
+                color: #1a1a1a;
+                line-height: 1.3;
+            }
+            
+            .o_title_subtitle {
+                font-size: 13px;
+                color: #6b7280;
+                font-weight: 400;
             }
             
             .o_editor_actions {
                 display: flex;
-                gap: 10px;
+                gap: 12px;
+            }
+            
+            .o_editor_actions .btn {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 24px;
+                border-radius: 10px;
+                font-weight: 500;
+                transition: all 0.2s ease;
+                border: none;
+                font-size: 15px;
+            }
+            
+            .o_save_btn {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            }
+            
+            .o_save_btn:hover:not(:disabled) {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            }
+            
+            .o_save_btn:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+            
+            .o_close_btn {
+                background: #f3f4f6;
+                color: #6b7280;
+                width: 48px;
+                padding: 12px;
+                justify-content: center;
+            }
+            
+            .o_close_btn:hover {
+                background: #e5e7eb;
+                color: #374151;
             }
             
             .o_editor_content {
                 flex: 1;
-                padding: 20px;
+                padding: 30px;
                 overflow: auto;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .o_loading_state {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                color: white;
+            }
+            
+            .o_spinner {
+                font-size: 48px;
+                margin-bottom: 20px;
+                animation: pulse 2s ease-in-out infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+            
+            .o_loading_state p {
+                font-size: 16px;
+                font-weight: 500;
+                opacity: 0.9;
+            }
+            
+            .o_editor_wrapper {
+                width: 100%;
+                max-width: 900px;
+                height: 100%;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+                overflow: hidden;
             }
             
             .o_editor_textarea {
                 width: 100%;
                 height: 100%;
-                min-height: 500px;
-                padding: 20px;
-                border: 1px solid #dee2e6;
-                border-radius: 8px;
-                font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-                font-size: 14px;
-                line-height: 1.6;
-                resize: vertical;
+                padding: 40px;
+                border: none;
+                font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+                font-size: 15px;
+                line-height: 1.8;
+                color: #1a1a1a;
                 background: white;
+                resize: none;
+                outline: none;
+            }
+            
+            .o_editor_textarea::placeholder {
+                color: #9ca3af;
+                font-style: italic;
             }
             
             .o_editor_textarea:focus {
                 outline: none;
-                border-color: #0d6efd;
-                box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+            }
+            
+            /* Scrollbar styling */
+            .o_editor_content::-webkit-scrollbar {
+                width: 8px;
+            }
+            
+            .o_editor_content::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            .o_editor_content::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 4px;
+            }
+            
+            .o_editor_content::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.4);
+            }
+            
+            .o_editor_textarea::-webkit-scrollbar {
+                width: 8px;
+            }
+            
+            .o_editor_textarea::-webkit-scrollbar-track {
+                background: #f3f4f6;
+            }
+            
+            .o_editor_textarea::-webkit-scrollbar-thumb {
+                background: #d1d5db;
+                border-radius: 4px;
+            }
+            
+            .o_editor_textarea::-webkit-scrollbar-thumb:hover {
+                background: #9ca3af;
             }
         </style>
     </t>
