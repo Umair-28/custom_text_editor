@@ -18,21 +18,16 @@
         <field name="model">documents.document</field>
         <field name="inherit_id" ref="documents.document_view_kanban"/>
         <field name="arch" type="xml">
-            <!-- Add field after alias_tag_ids -->
-            <xpath expr="//field[@name='alias_tag_ids']" position="after">
-                <field name="is_text_editable"/>
-            </xpath>
-
-            <!-- Move the Edit button to header -->
-            <xpath expr="//div[@class='o_kanban_header']" position="inside">
+            <!-- Insert the Edit button after the document name inside the card template -->
+            <xpath expr="//t[@t-name='card']//div[contains(@class,'fw-bolder')]" position="inside">
                 <t t-if="record.type.raw_value != 'folder' and record.is_text_editable.raw_value">
-                    <button name="action_open_editor" type="object" string="Edit" class="btn btn-sm btn-secondary float-right">
+                    <button name="action_open_editor" type="object" class="btn btn-sm btn-secondary ms-2" title="Edit Document">
                         <i class="fa fa-edit"/>
- Edit
                     </button>
                 </t>
             </xpath>
         </field>
     </record>
+
 
 </odoo>
